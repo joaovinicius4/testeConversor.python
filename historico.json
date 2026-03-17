@@ -1,0 +1,27 @@
+import json
+import os
+
+def salvar_historico(valor, origem, destino, resultado):
+    historico = {
+        "valor": valor,
+        "moeda_origem": origem,
+        "moeda_destino": destino,
+        "resultado": resultado
+    }
+
+    # Se o arquivo já existe, carrega a lista
+    if os.path.exists("historico.json"):
+        with open("historico.json", "r") as arquivo:
+            try:
+                dados = json.load(arquivo)
+            except json.JSONDecodeError:
+                dados = []
+    else:
+        dados = []
+
+    # Adiciona novo registro
+    dados.append(historico)
+
+    # Salva lista completa
+    with open("historico.json", "w") as arquivo:
+        json.dump(dados, arquivo, indent=4)
